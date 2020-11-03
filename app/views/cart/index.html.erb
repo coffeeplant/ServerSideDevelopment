@@ -1,0 +1,34 @@
+<% if @cart.empty? %>
+
+<h1>Your cart is empty</h1></h1>
+
+
+<% end %>
+
+<div id="itemsContainer">
+    
+    <table id="cartTable">
+        
+        <% total = 0%> <!-- also starts here at zero regardless-->
+        
+        <% @cart.each do |id, quantity| %>
+        
+        <% item = Item.find_by_id(id) %>
+        
+        <tr>
+            
+            <td><%= item.title %></td>
+            
+        </tr>
+        
+        
+        
+        
+        <%end %>
+        
+        
+        
+    </table>
+    
+    
+</div>
