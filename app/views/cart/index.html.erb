@@ -7,7 +7,7 @@
 
 <div id="itemsContainer">
     
-    <table id="cartTable">
+    <table id="customers">
         
         <% total = 0%> <!-- also starts here at zero regardless-->
         
@@ -16,17 +16,22 @@
         <% item = Item.find_by_id(id) %>
         
         <tr>
-            
-            <td><%= item.title %></td>
-            
+            <td class="title"><%= link_to (image_tag item.image_url, :style =>"width:10%"), item %></td>
+            <td class="title"><%= link_to item.title, item %></td>
+            <td class="title"><%= number_to_currency(item.price, :unit =>"€") %></td>
+            <td class="title"> <%= quantity %> </td>
+            <td class="title"> <%= number_to_currency(quantity * item.price, :unit =>"€") %></td>
         </tr>
         
-        
-        
+        <% total += quantity * item.price %><!-- this is within for each loop so don't show on page-->
         
         <%end %>
         
-        
+        <tr>
+            
+            <td class="title">Cart Total: <%= number_to_currency(total, :unit =>"€") %></td>
+            
+        </tr>
         
     </table>
     
