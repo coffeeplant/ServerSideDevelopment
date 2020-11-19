@@ -16,14 +16,15 @@
         
         <li><%= link_to "Cart", "/cart"  %></li>
   
-             <% if session[:login] ==1%> <!-- don't use this for real log-ins,
-             just a sample for hiding and showing-->
-       <li><%= link_to "Pretend Log Out", "/pretend_logout"  %></li>
-            
-            <% else %>    
-     
-        <li><%= link_to "Pretend Log In", "/pretend_login"  %></li>
-            <% end %> 
+      <% if user_signed_in? %>
+             <li><a href="#">Hi <%= current_user.email %></a></li>
+             <li><%= link_to 'Sign out', destroy_user_session_path, :method => :delete %></li>
+      <% else %>
+             <li><%= link_to 'Register', new_user_registration_path %></li> 
+             <li><%= link_to 'Sign in', new_user_session_path %></li>
+      <% end %>
+
+
 
       </ul>
 

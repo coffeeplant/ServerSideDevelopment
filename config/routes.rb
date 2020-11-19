@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  devise_for :users
   get 'cart/index'
 
   resources :items
@@ -23,6 +24,12 @@ Rails.application.routes.draw do
   get '/cart' => 'cart#index'
   
   get '/cart/:id' => 'cart#add'
+  
+  get '/clearcart' => 'cart#clearcart'
+  
+  get'/remove/:id' => 'cart#remove'
+  
+  get '/decrease/:id' => 'cart#decrease'
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
