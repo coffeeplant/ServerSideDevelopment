@@ -1,13 +1,26 @@
 Rails.application.routes.draw do
-  resources :orders
-  devise_for :users
+  resources :orders do
+    
+    resources:orderitems
+    
+  end
+  
+  
+  devise_for :users do
+    
+    resources:orders
+    
+  end
+  
+  get '/checkout' => 'cart#createOrder'
+
   get 'cart/index'
 
   resources :items
   root 'static_pages#home'
 
 # 
-
+  
   get '/help' => 'static_pages#help'
 
   get '/about' => 'static_pages#about'
@@ -15,8 +28,6 @@ Rails.application.routes.draw do
   get '/contact' => 'static_pages#contact'
   
   get '/products' => 'items#index'
-  
-  
   
   get 'pretend_login' =>'user#pretendlogin'
   

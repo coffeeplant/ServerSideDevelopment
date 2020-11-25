@@ -79,8 +79,46 @@ class CartController < ApplicationController
     end
   
     redirect_to :action => :index
-    
   
   end
+  
+  def createOrder
+      
+    #Step 1 Find user information
+    
+    @user = User.find(current_user.id) #@user is instance variable,
+    #uppercase indictaes the table to search/find in
+    
+    #Step 2 Make a new order and link that order with the current user
+    
+    @order = @user.orders.build(:order_date => DateTime.now, :status => 'Pending')
+      #Pending is hard-coded, for project can put in selection from drop-down list, 
+      # so any parameter can go here
+      #DateTime is from server not browser/user
+    @order.save
+    
+    #Step 3 - Save each order item from the cart into the orderitems table
+    @cart = session[:cart] || {} #this gets the items from the users cart session
+    #bit at end '|| {}' is ruby syntax to take all info from cart session
+    
+    @cart.each do | id, quantity | 
+      
+      item = Item.find_by_id(id)
+      
+    @orderitem = @order.orderitems.build(
+      :item_id => item.id, 
+      :title => item.title,
+      :description => item.description, 
+      :quantity => quantity,#this is not from the items table, it's made in the cart,
+      :price => item.price )
+    @orderitem.save
+    
+    end
+    
+  end  
+  
+  
+  
+  
   
 end
