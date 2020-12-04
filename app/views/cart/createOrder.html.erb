@@ -1,1 +1,57 @@
 <h1>Thank You!</h1>
+
+<% @orders.limit(1).order(id: :desc).each do |order| %>
+<!-- sample of limiting functionality using SQL statment, limits to most recent order made-->
+        You Just Placed Order No - <%= order.id %>
+        
+        <a href = '/paid/<%= order.id %>'class="button">Pay Now</a> 
+        <%  end %>
+        
+
+        
+<div id="itemsContainer">
+    <table id="customers">
+        
+        <tr>
+            <th>Title</th>
+            <th>Price</th>
+            <th>Qty</th>
+            <th>Item Total</th>
+        </tr>
+        
+        <% total = 0 %>
+        <% @cart.each do |id, quantity| %>
+        
+        <% item = Item.find_by_id(id) %>
+        
+        <tr>
+            
+            
+            <td class="title"><%= link_to item.title, item %></td>
+        
+            
+            <td class="price"><%= number_to_currency(item.price, :unit =>"€") %></td>
+            
+            <td class="quantity"><%= quantity %></td>
+            <td class="price"><%= number_to_currency(quantity * item.price, :unit =>"€") %></td>
+            
+        </tr>
+        
+            <% total += quantity * item.price %>
+         <% end %>
+         <tr>
+            <td>Grand Total: <%= number_to_currency(total, :unit => "€") %></td>
+          </tr>
+          <% shipping = 10 %>
+          <% @overalltotal = shipping + total %>
+          <tr>
+              <td>
+                  Shipping is €10
+              </td>
+              <td>So you owe me: € <%= @overalltotal %></td>
+          </tr>
+           
+    </table>
+    
+
+      </div>

@@ -115,6 +115,12 @@ class CartController < ApplicationController
     
     end
     
+    @orders = Order.all
+    
+    @orderitems = Orderitem.where(order_id: Order.last)
+    #this is using limiting functionality but in Ruby, SQL ex in createOrder.html
+    #this is runing twice, need to fix, SQL and Ruby statements doing same thing
+    
   end  
   
   
